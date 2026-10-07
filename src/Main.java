@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Jogo wordle = new Wordle();
+        Jogo jogoSenha = new JogoSenha();
         int opcao = 0;
 
         while (opcao != 4) {
@@ -11,7 +12,7 @@ public class Main {
             System.out.println("     MENU DE JOGOS      ");
             System.out.println("========================");
             System.out.println("1. " + wordle.getNome());
-            System.out.println("2. Jogo 2 (Em breve)");
+            System.out.println("2. " + jogoSenha.getNome());
             System.out.println("3. Jogo 3 (Em breve)");
             System.out.println("4. Sair");
             System.out.print("Escolha uma opção: ");
@@ -25,7 +26,7 @@ public class Main {
                         wordle.iniciar();
                         break;
                     case 2:
-                        System.out.println("\nEm desenvolvimento...");
+                        jogoSenha.iniciar();
                         break;
                     case 3:
                         System.out.println("\nEm desenvolvimento...");
