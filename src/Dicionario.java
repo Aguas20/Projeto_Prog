@@ -1,55 +1,64 @@
 import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 public class Dicionario {
-    private Set<String> palavrasValidas = new HashSet<>();
-    private List<String> listaParaSorteio = new ArrayList<>();
-    private Random random = new Random();
+    // Lista dinâmica (ArrayList) com todas as palavras de 5 letras do ficheiro
+    private ArrayList<String> palavras = new ArrayList<>();
 
     public Dicionario() {
         carregarPalavras();
     }
 
     private void carregarPalavras() {
-        // Vai buscar o ficheiro diretamente à pasta src sem depender de caminhos relativos
-        try (InputStream is = getClass().getClassLoader().getResourceAsStream("palavras.txt")) {
-            if (is == null) {
-                System.out.println("ERRO: O ficheiro palavras.txt não foi encontrado dentro de src!");
-                return;
-            }
+        // Verifica se o ficheiro existe (classe File)
+        // Tenta primeiro na pasta do projeto e depois dentro de src
+        String nomeArquivo = "palavras.txt";
+        File arquivo = new File(nomeArquivo);
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-                String linha;
-                while ((linha = br.readLine()) != null) {
-                    linha = linha.trim().toUpperCase();
-                    if (linha.length() == 5) {
-                        palavrasValidas.add(linha);
-                        listaParaSorteio.add(linha);
-                    }
+        if (!arquivo.exists()) {
+            nomeArquivo = "src/palavras.txt";
+            arquivo = new File(nomeArquivo);
+        }
+
+        if (!arquivo.exists()) {
+            System.out.println("ERRO: O ficheiro palavras.txt não foi encontrado!");
+            return;
+        }
+
+        // try-with-resources: o BufferedReader é fechado automaticamente
+        try (BufferedReader leitor = new BufferedReader(new FileReader(nomeArquivo))) {
+            String linha;
+
+            // Lê o ficheiro linha a linha
+            while ((linha = leitor.readLine()) != null) {
+                linha = linha.trim().toUpperCase();
+
+                if (linha.length() == 5) {
+                    palavras.add(linha);
                 }
             }
 
-            System.out.println("Sucesso: Foram carregadas " + palavrasValidas.size() + " palavras.");
+            System.out.println("Sucesso: Foram carregadas " + palavras.size() + " palavras.");
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Erro ao carregar o ficheiro: " + e.getMessage());
         }
     }
 
     public boolean ehPalavraValida(String palavra) {
-        return palavrasValidas.contains(palavra.toUpperCase());
+        // contains() do ArrayList
+        return palavras.contains(palavra.toUpperCase());
     }
 
     public String sortearPalavra() {
-        if (listaParaSorteio.isEmpty()) {
+        if (palavras.isEmpty()) {
             return "MANTA";
         }
-        return listaParaSorteio.get(random.nextInt(listaParaSorteio.size()));
+
+        int indice = (int) (Math.random() * palavras.size());
+        return palavras.get(indice);
     }
 }

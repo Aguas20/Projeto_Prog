@@ -9,6 +9,6 @@ public abstract class Jogo {
         return nome;
     }
 
-    // Cada jogo que herdar desta classe é obrigado a ter o seu próprio método iniciar()
+    // Cada jogo que herdar desta classe é obrigado a ter o seu próprio metodo iniciar()
     public abstract void iniciar();
 }
