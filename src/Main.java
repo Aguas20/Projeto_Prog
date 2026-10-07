@@ -3,8 +3,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        
+        // 1. Instancie o novo jogo aqui:
         Jogo wordle = new Wordle();
         Jogo jogoSenha = new JogoSenha();
+        Jogo Velha = new Velha(); 
+        
         int opcao = 0;
 
         while (opcao != 4) {
@@ -13,7 +17,8 @@ public class Main {
             System.out.println("========================");
             System.out.println("1. " + wordle.getNome());
             System.out.println("2. " + jogoSenha.getNome());
-            System.out.println("3. Jogo 3 (Em breve)");
+            // 2. Atualize a exibição do menu:
+            System.out.println("3. " + Velha.getNome()); 
             System.out.println("4. Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -29,7 +34,8 @@ public class Main {
                         jogoSenha.iniciar();
                         break;
                     case 3:
-                        System.out.println("\nEm desenvolvimento...");
+                        // 3. Chame o método iniciar() no case 3:
+                       Velha.iniciar(); 
                         break;
                     case 4:
                         System.out.println("\nA encerrar o programa. Até à próxima!");
